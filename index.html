@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Expense Splitter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>💰 Smart Expense Splitter</h1>
+    <form id="expenseForm">
+      <div id="personList"></div>
+      <button type="button" onclick="addPerson()">+ Add Person</button>
+      <div class="actions">
+        <button type="button" onclick="calculateSettlement()">Calculate</button>
+        <button type="reset" onclick="resetApp()">Reset</button>
+      </div>
+    </form>
+    <div id="summary"></div>
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
