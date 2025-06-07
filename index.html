@@ -2,23 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Smart Expense Splitter</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>💰 Smart Expense Splitter</h1>
-    <form id="expenseForm">
+    <form id="expenseForm" onsubmit="return false;">
       <div id="personList"></div>
-      <button type="button" onclick="addPerson()">+ Add Person</button>
-      <div class="actions">
+
+      <div class="controls">
+        <button type="button" onclick="addPerson()">+ Add Person</button>
         <button type="button" onclick="calculateSettlement()">Calculate</button>
-        <button type="reset" onclick="resetApp()">Reset</button>
+        <button type="button" onclick="resetApp()">Reset</button>
+        <button type="button" onclick="downloadPDF()">Download PDF</button>
+
       </div>
     </form>
+
     <div id="summary"></div>
     <div id="result"></div>
+    <canvas id="expenseChart" width="400" height="400" style="margin-top: 30px;"></canvas>
+
+  <!-- PDF Download button -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  
+  <!-- Footer for copyright -->
+  <footer style="text-align:center; margin-top: 40px; font-size: 0.9rem; color: #666;">
+    &copy; 2025 Smart Expense Splitter. All rights reserved.
+  </footer>
   </div>
 
   <script src="script.js"></script>
