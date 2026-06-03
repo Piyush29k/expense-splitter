@@ -1,40 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Expense Splitter</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SplitSmart Pro</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-  <div class="container">
-    <h1>💰 Smart Expense Splitter</h1>
-    <form id="expenseForm" onsubmit="return false;">
-      <div id="personList"></div>
 
-      <div class="controls">
-        <button type="button" onclick="addPerson()">+ Add Person</button>
-        <button type="button" onclick="calculateSettlement()">Calculate</button>
-        <button type="button" onclick="resetApp()">Reset</button>
-        <button type="button" onclick="downloadPDF()">Download PDF</button>
+    <div class="app">
 
-      </div>
-    </form>
+        <!-- HEADER -->
+        <header class="header">
 
-    <div id="summary"></div>
-    <div id="result"></div>
-    <canvas id="expenseChart" width="400" height="400" style="margin-top: 30px;"></canvas>
+            <h1 class="logo">
+                <i class="fa-solid fa-wallet"></i>
+                SplitSmart Pro
+            </h1>
 
-  <!-- PDF Download button -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+            <p class="subtitle">
+                Smart Expense Splitting & Settlement Manager
+            </p>
 
-  
-  <!-- Footer for copyright -->
-  <footer style="text-align:center; margin-top: 40px; font-size: 0.9rem; color: #666;">
-    &copy; 2025 Smart Expense Splitter. All rights reserved.
-  </footer>
-  </div>
+        </header>
 
-  <script src="script.js"></script>
+        <!-- DASHBOARD -->
+        <section class="dashboard">
+
+            <div class="stat-card">
+                <i class="fa-solid fa-users stat-icon"></i>
+                <h3>Participants</h3>
+                <span id="participantCount">0</span>
+            </div>
+
+            <div class="stat-card">
+                <i class="fa-solid fa-indian-rupee-sign stat-icon"></i>
+                <h3>Total Expense</h3>
+                <span id="liveTotal">₹0.00</span>
+            </div>
+
+            <div class="stat-card">
+                <i class="fa-solid fa-chart-pie stat-icon"></i>
+                <h3>Average Share</h3>
+                <span id="avgShare">₹0.00</span>
+            </div>
+
+            <div class="stat-card">
+                <i class="fa-solid fa-money-bill-transfer stat-icon"></i>
+                <h3>Transactions</h3>
+                <span id="transactionCount">0</span>
+            </div>
+
+        </section>
+
+        <!-- PARTICIPANTS -->
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>
+                    <i class="fa-solid fa-user-group"></i>
+                    Participants
+                </h2>
+
+                <div class="header-actions">
+
+                    <button class="primary-btn" onclick="addPerson()">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Add Person
+                    </button>
+
+                    <button class="outline-btn" onclick="toggleTheme()">
+                        <i class="fa-solid fa-moon"></i>
+                        Dark Mode
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- SEARCH -->
+            <div class="search-wrapper">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search Participant">
+
+            </div>
+
+            <!-- PERSON LIST -->
+            <div id="personList"></div>
+
+        </section>
+
+        <!-- ACTION BUTTONS -->
+        <section class="controls">
+
+            <button class="primary-btn" onclick="calculateSettlement()">
+                <i class="fa-solid fa-calculator"></i>
+                Calculate
+            </button>
+
+            <button class="outline-btn" onclick="downloadPDF()">
+                <i class="fa-solid fa-file-pdf"></i>
+                Download PDF
+            </button>
+
+            <button class="outline-btn" onclick="downloadCSV()">
+                <i class="fa-solid fa-file-csv"></i>
+                Export CSV
+            </button>
+
+            <button class="danger-btn" onclick="resetApp()">
+                <i class="fa-solid fa-trash"></i>
+                Reset
+            </button>
+
+        </section>
+
+        <!-- TOTAL CARD -->
+        <section id="totalCard">
+
+            <h2>Total Group Expense</h2>
+
+            <h1 id="grandTotal">
+                ₹0.00
+            </h1>
+
+        </section>
+
+        <!-- ANALYTICS -->
+        <section class="analytics-grid">
+
+            <div class="card">
+
+                <h3>
+                    <i class="fa-solid fa-chart-pie"></i>
+                    Expense Breakdown
+                </h3>
+
+                <canvas id="expenseChart"></canvas>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    <i class="fa-solid fa-chart-column"></i>
+                    Summary
+                </h3>
+
+                <div id="summary"></div>
+
+            </div>
+
+        </section>
+
+        <!-- SETTLEMENT -->
+        <section class="card">
+
+            <h3>
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                Settlement Results
+            </h3>
+
+            <div id="result"></div>
+
+        </section>
+
+        <!-- ACTIVITY -->
+        <section class="card">
+
+            <h3>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Recent Activity
+            </h3>
+
+            <ul id="activityLog">
+                <li>No activity available.</li>
+            </ul>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <p>
+                <i class="fa-solid fa-copyright"></i>
+                2026 SplitSmart Pro
+            </p>
+
+            <p>
+                Made by Piyush kumar
+            </p>
+
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
 </html>
